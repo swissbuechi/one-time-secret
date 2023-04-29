@@ -10,7 +10,7 @@
     <meta content="#ffffff" name="theme-color">
     <!--Let browser know website is optimized for mobile-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="/static/montserrat.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <link href="/static/application.css" rel="stylesheet">
 </head>
 
@@ -24,22 +24,14 @@
         <div class="container">
             <h1>Secret Message</h1>
             <!--        <p class="subtitle">Send a secret one-time read only message</p>-->
-            <p class="subtitle">Senden Sie eine geheime einmalige schreibgeschützte Nachricht</p>
+            <p class="subtitle">Erstelle eine geheime Nachricht</p>
             <div class="container">
                 <form action="/no-internet" enctype="multipart/form-data" id="secretform" method="POST">
 
                     <div class="input-field">
                         <!--                    <textarea id="textarea1" name="msg" placeholder="Paste your message here"-->
-                        <textarea id="textarea1" name="msg" placeholder="Fügen Sie hier Ihre Nachricht ein"
+                        <textarea id="textarea1" name="msg" placeholder="Füge hier deine Nachricht ein"
                             required="required"></textarea>
-                    </div>
-                    <div class="ttl" style="display: none">
-                        Time to expire:
-                        <select id="ttl" name="ttl">
-                            <option value="24h">24h</option>
-                            <!--                        <option value="48h">48h</option>-->
-                            <option selected value="168h">7 days</option>
-                        </select>
                     </div>
                     <div class="button_wrapper">
                         <!--                    <button class="encrypt" name="action" type="submit">Submit-->
@@ -61,16 +53,16 @@
                     <div class="button">
                         <button class="btn clipboard" data-clipboard-target="#url">
                             <!--                        Copy to Clipboard-->
-                            In die Zwischenablage kopieren
+                            In Zwischenablage kopieren
                         </button>
                     </div>
                     <br>
-                    <div class="ttl">
+                    <div class=".success-encrypted">
                         <!--                    Do not open the link, unless you want to destroy the secret message-->
-                        Öffnen Sie den Link nicht, es sei denn, Sie möchten die geheime Nachricht zerstören
+                        Die Nachricht wird nach dem öffnen automatisch zerstört
                         <br>
                         <!--                    Your link will expire in 7 days-->
-                        Ihr Link läuft in 7 Tagen ab
+                        Link läuft in 7 Tagen ab
                     </div>
                 </div>
             </div>
@@ -101,13 +93,7 @@
                     pointerEvents: 'auto',
                     visibility: 'visible',
                 });
-
                 applyCss(document.querySelector('.encrypt'), {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    visibility: 'hidden',
-                });
-                applyCss(document.querySelector('.ttl'), {
                     opacity: 0,
                     pointerEvents: 'none',
                     visibility: 'hidden',
