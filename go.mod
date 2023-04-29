@@ -1,6 +1,6 @@
 module github.com/swissbuechi/one-time-secret
 
-go 1.18
+go 1.20
 
 require (
 	github.com/hashicorp/vault/api v1.9.1
