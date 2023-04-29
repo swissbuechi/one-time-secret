@@ -1,0 +1,9 @@
+.vscode
+.gihub
+vault
+.dev.env
+.gitignore
+docker-compose.yml
+docker-compose.dev.yml
+example.env
+README.md
