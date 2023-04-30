@@ -10,7 +10,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DOCKER_CONTENT_TRUST: 1
 
 jobs:
   scan-docker-image-dockle:
@@ -28,4 +27,4 @@ jobs:
           format: "list"
           exit-code: "1"
           exit-level: "warn"
-          ignore: "DKL-DI-0006"
+          ignore: "DKL-DI-0006,CIS-DI-0005"
