@@ -16,9 +16,9 @@ services:
     restart: unless-stopped
     command: vault server -config=/vault/config/vault.json
 
-  ots:
+  one-time-secret:
     image: ghcr.io/swissbuechi/one-time-secret:latest
-    container_name: ots
+    container_name: one-time-secret
     environment:
       VAULT_ADDR: http://vault:8200
       VAULT_TOKEN: ${VAULT_TOKEN}
