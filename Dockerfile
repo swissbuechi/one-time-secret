@@ -1,5 +1,5 @@
 FROM golang:1.20-alpine AS build
-ADD . /app
+COPY . /app
 WORKDIR /app
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o app .
@@ -23,8 +23,9 @@ RUN apk add --no-cache ca-certificates curl libcap
 RUN addgroup --gid 1000 -S app && adduser --uid 1000 -S app -G app
 RUN chown -R app:app /app
 COPY --from=build /app/app .
-ADD ./static static
+COPY ./static static
 RUN setcap 'cap_net_bind_service=+ep' ./app
 USER app
 CMD [ "./app" ]
-# HEALTHCHECK CMD curl --fail --silent localhost:80/health | grep UP || exit 1
+HEALTHCHECK --interval=5m --timeout=3s \
+    CMD curl --fail --silent localhost${OTS_HTTP_BINDING_ADDRESS}/health | grep OK || exit 1
