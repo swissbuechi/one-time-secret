@@ -20,7 +20,7 @@ jobs:
       matrix:
         image_tag: ["latest"]
     steps:
-      - name: Run dockle
+      - name: run dockle
         uses: goodwithtech/dockle-action@main
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.image_tag }}
