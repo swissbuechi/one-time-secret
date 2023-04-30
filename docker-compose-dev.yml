@@ -15,8 +15,8 @@ services:
       - "8200:8200"
 
   one-time-secret:
-    # build: ./
-    image: ghcr.io/swissbuechi/one-time-secret:1.0.0
+    build: ./
+    # image: ghcr.io/swissbuechi/one-time-secret:1.0.0
     container_name: one-time-secret
     environment:
       VAULT_ADDR: http://vault:8200
