@@ -26,5 +26,5 @@ jobs:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.image_tag }}
           format: "list"
           exit-code: "1"
-          exit-level: "warn"
+          exit-level: "info"
           ignore: "DKL-DI-0006,CIS-DI-0005"
