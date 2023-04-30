@@ -1,4 +1,0 @@
-general:
-  #vulnerabilities:
-  bestPracticeViolations:
-    - DKL-DI-0006 #Allow latest tag

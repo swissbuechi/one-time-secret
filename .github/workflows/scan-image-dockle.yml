@@ -1,0 +1,30 @@
+name: Scan image with Dockle
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Docker image"]
+    types:
+      - completed
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  scan-docker-image-dockle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        image_tag: ["latest"]
+    steps:
+      - name: Run dockle
+        uses: goodwithtech/dockle-action@main
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.image_tag }}
+          format: "list"
+          exit-code: "1"
+          exit-level: "warn"
+          ignore: "DKL-DI-0006"
