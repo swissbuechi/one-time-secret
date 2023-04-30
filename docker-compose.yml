@@ -17,7 +17,7 @@ services:
     command: vault server -config=/vault/config/vault.json
 
   ots:
-    image: ghcr.io/netider-ch/one-time-secret:latest
+    image: ghcr.io/swissbuechi/one-time-secret:latest
     container_name: ots
     environment:
       VAULT_ADDR: http://vault:8200
