@@ -19,12 +19,12 @@ ENV \
 ENV TZ=Europe/Zurich
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
-RUN apk add --no-cache ca-certificates curl
+RUN apk add --no-cache ca-certificates curl libcap
 RUN addgroup --gid 1000 -S app && adduser --uid 1000 -S app -G app
 RUN chown -R app:app /app
-USER app
 COPY --from=build /app/app .
-# COPY --from=build /app/static .
 ADD ./static static
+RUN setcap 'cap_net_bind_service=+ep' ./app
+USER app
 CMD [ "./app" ]
 # HEALTHCHECK CMD curl --fail --silent localhost:80/health | grep UP || exit 1
