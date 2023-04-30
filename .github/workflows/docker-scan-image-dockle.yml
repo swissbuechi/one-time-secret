@@ -1,15 +1,16 @@
-name: Scan image with Dockle
+name: docker image dockle scan
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Docker image"]
+    workflows: ["docker image build and push"]
     types:
       - completed
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DOCKER_CONTENT_TRUST: 1
 
 jobs:
   scan-docker-image-dockle:
