@@ -25,8 +25,10 @@ func main() {
 		e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
 	}
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.BodyLimit("50M"))
+	if conf.HttpRequestLog {
+		e.Use(middleware.Logger())
+	}
+	e.Use(middleware.BodyLimit("1M"))
 	e.Use(middleware.Secure())
 
 	e.GET("*", redirect)

@@ -7,6 +7,7 @@ import (
 )
 
 type conf struct {
+	HttpRequestLog       bool
 	HttpBindingAddress   string
 	HttpsBindingAddress  string
 	HttpsRedirectEnabled bool
@@ -16,6 +17,7 @@ type conf struct {
 	VaultPrefix          string
 }
 
+const HttpRequestLogVarenv = "OTS_HTTP_REQUEST_LOG"
 const HttpBindingAddressVarenv = "OTS_HTTP_BINDING_ADDRESS"
 const HttpsBindingAddressVarenv = "OTS_HTTPS_BINDING_ADDRESS"
 const HttpsRedirectEnabledVarenv = "OTS_HTTPS_REDIRECT_ENABLED"
@@ -27,6 +29,7 @@ const VaultPrefixenv = "OTS_VAULT_PREFIX"
 func loadConfig() conf {
 	var cnf conf
 
+	cnf.HttpRequestLog = strings.ToLower(os.Getenv(HttpRequestLogVarenv)) == "true"
 	cnf.HttpBindingAddress = os.Getenv(HttpBindingAddressVarenv)
 	cnf.HttpsBindingAddress = os.Getenv(HttpsBindingAddressVarenv)
 	cnf.HttpsRedirectEnabled = strings.ToLower(os.Getenv(HttpsRedirectEnabledVarenv)) == "true"
@@ -65,6 +68,7 @@ func loadConfig() conf {
 		cnf.VaultPrefix = "cubbyhole/"
 	}
 
+	log.Println("[INFO] HTTP Request Log enabled:", cnf.HttpRequestLog)
 	log.Println("[INFO] HTTP Binding Address:", cnf.HttpBindingAddress)
 	log.Println("[INFO] HTTPS Binding Address:", cnf.HttpsBindingAddress)
 	log.Println("[INFO] HTTPS Redirect enabled:", cnf.HttpsRedirectEnabled)
