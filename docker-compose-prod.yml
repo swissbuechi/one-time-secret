@@ -5,26 +5,29 @@ services:
     image: vault:1.13.1
     container_name: vault
     environment:
-      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_AZUREKEYVAULT_VAULT_NAME: "< >"
+      VAULT_AZUREKEYVAULT_KEY_NAME: "< >"
+      AZURE_TENANT_ID: "< >"
+      AZURE_CLIENT_ID: "< >"
+      AZURE_CLIENT_SECRET: "< >"
     cap_add:
       - IPC_LOCK
     volumes:
-      - ./vault/config:/vault/config
+      - ./vault/config/vault.hcl:/vault/config/vault.hcl
       - ./vault/file:/vault/file
-    expose:
-      - 8200
     restart: unless-stopped
-    command: vault server -config=/vault/config/vault.json
+    command: vault server -config=/vault/config/vault.hcl
 
   one-time-secret:
     image: ghcr.io/swissbuechi/one-time-secret:latest
     container_name: one-time-secret
     environment:
       VAULT_ADDR: http://vault:8200
-      VAULT_TOKEN: ${VAULT_TOKEN}
-      OTS_HTTP_BINDING_ADDRESS: ":8082"
+      VAULT_TOKEN: "< >"
+      OTS_HTTP_BINDING_ADDRESS: ":80"
     ports:
-      - "8082:8082"
+      - "8080:80"
     depends_on:
       - vault
     restart: unless-stopped
