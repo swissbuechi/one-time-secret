@@ -20,9 +20,10 @@ ENV \
 ENV TZ=Europe/Zurich
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
+RUN mkdir -p /var/www
 RUN apk add --no-cache ca-certificates curl libcap
 RUN addgroup --gid 1000 -S app && adduser --uid 1000 -S app -G app
-RUN chown -R app:app /app
+RUN chown -R app:app /app /var/www
 COPY --from=build /app/app .
 COPY ./static static
 RUN setcap 'cap_net_bind_service=+ep' ./app
