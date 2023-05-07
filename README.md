@@ -1,5 +1,11 @@
 # OTS - One Time Secret
 
+## Production
+
+Generate self signed certificate:
+
+`openssl req -x509 -newkey rsa:4096 -keyout vault/config/cert.key -out vault/config/cert.pem -days 36525 -subj "/CN=localhost" -addext "subjectAltName = DNS:localhost,DNS:vault" -nodes`
+
 ## Customization
 
 ### Favicon

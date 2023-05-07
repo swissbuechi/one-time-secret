@@ -5,7 +5,9 @@ services:
     image: vault:1.13.1
     container_name: vault
     environment:
-      VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_CACERT: /vault/config/cert.pem
+      VAULT_ADDR: https://localhost:8200
+      VAULT_API_ADDR: https://0.0.0.0:8200
       VAULT_AZUREKEYVAULT_VAULT_NAME: "< >"
       VAULT_AZUREKEYVAULT_KEY_NAME: "< >"
       AZURE_TENANT_ID: "< >"
@@ -15,6 +17,8 @@ services:
       - IPC_LOCK
     volumes:
       - ./vault/config/vault.hcl:/vault/config/vault.hcl
+      - ./vault/config/cert.pem:/vault/config/cert.pem
+      - ./vault/config/cert.key:/vault/config/cert.key
       - ./vault/file:/vault/file
     restart: unless-stopped
     command: vault server -config=/vault/config/vault.hcl
@@ -23,9 +27,12 @@ services:
     image: ghcr.io/swissbuechi/one-time-secret:latest
     container_name: one-time-secret
     environment:
-      VAULT_ADDR: http://vault:8200
+      VAULT_CACERT: /vault/config/cert.pem
+      VAULT_ADDR: https://vault:8200
       VAULT_TOKEN: "< >"
       OTS_HTTP_BINDING_ADDRESS: ":80"
+    volumes:
+      - ./vault/config/cert.pem:/vault/config/cert.pem
     ports:
       - "8080:80"
     depends_on:
