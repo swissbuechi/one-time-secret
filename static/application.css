@@ -6,11 +6,16 @@
   text-align: center;
 }
 
+@font-face {
+  font-family: Montserrat;
+  src: url(font/Montserrat.ttf);
+}
+
 body {
   min-width: 100vw;
   min-height: 80vh;
   font-family: 'Montserrat', sans-serif;
-  background-color: #5C666EFF;
+  background-color: #343a40;
   -webkit-font-smoothing: antialiased;
   display: grid;
   margin: 0;
@@ -30,7 +35,6 @@ main {
 }
 
 h1 {
-  font-weight: 400;
   margin-bottom: 4px;
 }
 
@@ -44,8 +48,12 @@ textarea {
   height: 270px;
 }
 
+textarea:focus {
+  outline: none !important;
+}
+
 button:hover {
-  background-color: rgba(0, 103, 244, 0.7);
+  background-color: rgba(71, 209, 127, 0.7);
 }
 
 button {
@@ -110,11 +118,11 @@ button {
 }
 
 .encrypt {
-  background-color: #0067f4;
+  background-color: #47d17f;
 }
 
 .clipboard {
-  background-color: #0067f4;
+  background-color: #47d17f;
 }
 
 .success-encrypted {
@@ -139,7 +147,7 @@ button {
 }
 
 .logo {
-  margin: 10px;
-  height: 100px;
-  width: auto;
+  margin-top: 32px;
+  width: 100px;
+  height: auto;
 }

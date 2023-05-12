@@ -25,4 +25,4 @@ Generate self signed certificate:
 
 ### Icon
 
-- <a href="https://www.flaticon.com/free-icons/secret" title="secret icons">Secret icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/secret" title="secret icons">Secret icons created by juicy_fish - Flaticon</a>
