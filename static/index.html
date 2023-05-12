@@ -11,7 +11,8 @@
     <!--Let browser know website is optimized for mobile-->
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
-    <link href="/static/css/application.css" rel="stylesheet">
+    <link href="/static/application.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,8 +35,9 @@
                             required="required"></textarea>
                     </div>
                     <div class="button_wrapper">
-                        <!--                    <button class="encrypt" name="action" type="submit">Submit-->
-                        <button class="encrypt" name="action" type="submit">Link erstellen</button>
+                        <button type="submit" class="button encrypt" name="action" id="submit-button">
+                            <span class="button__text">Link erstellen</span>
+                        </button>
                     </div>
                 </form>
                 <div class="divider"></div>
@@ -45,7 +47,6 @@
                     </div>
                     <div class="button">
                         <button class="btn clipboard" data-clipboard-target="#url">
-                            <!--                        Copy to Clipboard-->
                             In Zwischenablage kopieren
                         </button>
                     </div>
@@ -75,6 +76,7 @@
 
         const formData = new FormData(this);
 
+        document.getElementById("submit-button").classList.add('button--loading');
         fetch('/secret', {
             method: 'POST',
             body: formData,
