@@ -15,7 +15,16 @@ Generate self signed certificate:
 
 ### Logo
 
-- Mount logo to docker volume `app/img/logo.png`
+- Mount logo to docker volume `app/static/img/logo/logo.png`
+
+### Custom CSS
+
+`app/static/css/custom.css`
+
+
+### Custom Font
+
+`app/static/font/font.ttf`
 
 ## Credits
 
