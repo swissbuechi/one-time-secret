@@ -1,4 +1,5 @@
 .vscode
+.git
 .gihub
 vault
 .dev.env
@@ -7,4 +8,5 @@ docker-compose.yml
 docker-compose.dev.yml
 docker-compose.prod.yml
 example.env
-README.md
+*.md
+doc
