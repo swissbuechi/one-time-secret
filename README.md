@@ -26,6 +26,10 @@ Generate self signed certificate:
 
 `app/static/font/font.ttf`
 
+## Development
+
+`docker compose -f docker-compose-dev.yml up --build`
+
 ## Credits
 
 ### Project
