@@ -1,5 +1,9 @@
 # OTS - One Time Secret
 
+## Demo
+
+![Demo](doc/demo.gif)
+
 ## Production
 
 Generate self signed certificate:
