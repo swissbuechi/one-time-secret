@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/hashicorp/vault/api v1.10.0
 	github.com/labstack/echo/v4 v4.11.1
-	github.com/ory/dockertest/v3 v3.7.0
+	github.com/ory/dockertest/v3 v3.10.0
 	golang.org/x/crypto v0.13.0
 )
 
