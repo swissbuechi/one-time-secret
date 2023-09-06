@@ -10,3 +10,4 @@ docker-compose.prod.yml
 example.env
 *.md
 doc
+LICENSE
