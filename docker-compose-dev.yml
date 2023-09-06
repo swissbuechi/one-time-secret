@@ -18,7 +18,7 @@ services:
 
   one-time-secret:
     build: ./
-    # image: ghcr.io/swissbuechi/one-time-secret:1.0.0
+    # image: ghcr.io/swissbuechi/one-time-secret:latest
     container_name: one-time-secret
     environment:
       VAULT_SKIP_VERIFY: true
