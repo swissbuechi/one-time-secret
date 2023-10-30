@@ -1,9 +1,9 @@
-name: docker image dockle scan
+name: Docker image dockle scan
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["docker image build and push"]
+    workflows: ["Docker image build and push"]
     types:
       - completed
 

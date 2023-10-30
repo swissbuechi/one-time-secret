@@ -1,9 +1,9 @@
-name: docker image trivy scan
+name: Docker image trivy scan
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["docker image build and push"]
+    workflows: ["Docker image build and push"]
     types:
       - completed
 
