@@ -111,7 +111,7 @@ func TestRedirectHandler(t *testing.T) {
 	}
 
 	l := rec.HeaderMap.Get("Location")
-	if l != "/msg" {
-		t.Fatalf("redirect Location is %s, expected %s", l, "/msg")
+	if l != "/" {
+		t.Fatalf("redirect Location is %s, expected %s", l, "/")
 	}
 }
