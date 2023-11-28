@@ -32,7 +32,7 @@ Generate self signed certificate:
 
 ## Development
 
-`docker compose -f docker-compose-dev.yml up --build`
+`docker compose -f compose-dev.yml up --build`
 
 ## Credits
 
