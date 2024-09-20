@@ -1,6 +1,6 @@
 services:
   vault:
-    image: hashicorp/vault:1.15
+    image: hashicorp/vault:1.16
     container_name: vault
     environment:
       VAULT_ADDR: https://localhost:8200
@@ -16,7 +16,7 @@ services:
 
   one-time-secret:
     build: ./
-    # image: ghcr.io/swissbuechi/one-time-secret:latest
+    image: ghcr.io/swissbuechi/one-time-secret:latest
     container_name: one-time-secret
     environment:
       VAULT_SKIP_VERIFY: true
