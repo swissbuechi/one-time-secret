@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/hashicorp/vault/api v1.15.0
-	github.com/labstack/echo/v4 v4.12.0
+	github.com/labstack/echo/v4 v4.13.0
 	github.com/ory/dockertest/v3 v3.11.0
 	golang.org/x/crypto v0.29.0
 )
@@ -22,7 +22,6 @@ require (
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/go-jose/go-jose/v4 v4.0.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
