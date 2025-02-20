@@ -1,6 +1,6 @@
 services:
   vault:
-    image: hashicorp/vault:1.16
+    image: hashicorp/vault:1.18
     container_name: vault
     environment:
       VAULT_CACERT: /vault/config/cert.pem
