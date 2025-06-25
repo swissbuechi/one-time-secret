@@ -1,6 +1,6 @@
 services:
   vault:
-    image: hashicorp/vault:1.19
+    image: hashicorp/vault:1.20
     container_name: vault
     environment:
       VAULT_ADDR: https://localhost:8200
