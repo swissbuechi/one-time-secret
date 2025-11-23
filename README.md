@@ -34,6 +34,12 @@ Generate self signed certificate:
 
 `docker compose -f compose-dev.yml up --build`
 
+### Updates
+
+`go get -u -t ./...`
+
+`go mod tidy`
+
 ## Credits
 
 ### Project
