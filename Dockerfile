@@ -1,6 +1,8 @@
 FROM golang:1.26-alpine AS build
 COPY . /app
+COPY wordlists/ /app/wordlists/
 WORKDIR /app
+
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o app .
 
@@ -25,6 +27,7 @@ RUN apk add --no-cache ca-certificates curl libcap
 RUN addgroup --gid 1000 -S app && adduser --uid 1000 -S app -G app
 RUN chown -R app:app /app /var/www
 COPY --from=build /app/app .
+COPY ./wordlists wordlists
 COPY ./static static
 RUN setcap 'cap_net_bind_service=+ep' ./app
 USER app
