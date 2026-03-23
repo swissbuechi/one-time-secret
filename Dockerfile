@@ -1,6 +1,5 @@
 FROM golang:1.26-alpine AS build
 COPY . /app
-COPY wordlists/ /app/wordlists/
 WORKDIR /app
 
 RUN go mod download
