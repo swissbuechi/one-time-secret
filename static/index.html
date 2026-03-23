@@ -28,11 +28,17 @@
             <p class="subtitle">Erstelle eine geheime Nachricht</p>
             <div class="container">
                 <form action="/no-internet" enctype="multipart/form-data" id="secretform" method="POST">
-
-                    <div class="input-field">
-                        <!--                    <textarea id="textarea1" name="msg" placeholder="Paste your message here"-->
-                        <textarea id="textarea1" name="msg" placeholder="Füge hier deine Nachricht ein"
-                            required="required"></textarea>
+                    <div class="editor">
+                        <div class="editor-toolbar">
+                            <button type="button" class="toolbar-btn" name="action" id="passphrase-button">
+                                <span class="button__text">🔑 Passphrase</span>
+                            </button>
+                        </div>
+                        <div class="input-field">
+                            <!--                    <textarea id="textarea1" name="msg" placeholder="Paste your message here"-->
+                            <textarea id="textarea1" name="msg" placeholder="Füge hier deine Nachricht ein"
+                                required="required"></textarea>
+                        </div>
                     </div>
                     <div class="button_wrapper">
                         <button type="submit" class="button encrypt" name="action" id="submit-button">
@@ -45,8 +51,8 @@
                     <div class="output-field">
                         <textarea class="textarea" id="url" readonly=true></textarea>
                     </div>
-                    <div class="button">
-                        <button class="btn clipboard" data-clipboard-target="#url">
+                    <div class="button_wrapper">
+                        <button class="button clipboard" data-clipboard-target="#url">
                             In Zwischenablage kopieren
                         </button>
                     </div>
@@ -67,7 +73,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/clipboard@1.7.1/dist/clipboard.min.js"></script>
 <script type="text/javascript">
-    new Clipboard('.btn');
+    new Clipboard('.clipboard');
 
     const form = document.getElementById('secretform');
 
@@ -100,6 +106,27 @@
                 });
 
                 showURL(data.token, data.filetoken, data.filename);
+            });
+    });
+
+    document.querySelector('#passphrase-button').addEventListener('click', function () {
+        fetch('/passphrase')
+            .then((res) => res.json())
+            .then((data) => {
+                const textarea = document.getElementById('textarea1');
+
+                textarea.focus();
+
+                const selectionStart = textarea.selectionStart;
+                const selectionEnd = textarea.selectionEnd;
+
+                const inserted = document.execCommand('insertText', false, data.passphrase);
+
+                // Fallback
+                if (!inserted) {
+                    textarea.setRangeText(data.passphrase, selectionStart, selectionEnd, 'end');
+                    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                }
             });
     });
 
