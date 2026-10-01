@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/hashicorp/vault/api v1.23.0
-	github.com/labstack/echo/v4 v4.15.4
+	github.com/labstack/echo/v4 v4.16.0
 	github.com/ory/dockertest/v3 v3.12.0
 	golang.org/x/crypto v0.57.0
 )
