@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/vault/api v1.23.0
 	github.com/labstack/echo/v4 v4.16.6
 	github.com/ory/dockertest/v3 v3.12.0
-	github.com/sethvargo/go-diceware v0.5.0
+	github.com/sethvargo/go-diceware v0.6.0
 	golang.org/x/crypto v0.59.0
 	golang.org/x/text v0.44.0
 )
