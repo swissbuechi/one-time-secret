@@ -2,18 +2,37 @@ package main
 
 import (
 	"crypto/tls"
+	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/sethvargo/go-diceware/diceware"
 	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
 )
 
+var wordlist diceware.WordList
+
 func main() {
 	conf := loadConfig()
 
+	var err error
+
+	wordlist, err = LoadWordListFromFile("./wordlists/DE-wordlist-diceware.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	handlers := NewSecretHandlers(newVault("", conf.VaultPrefix, "")) // Vault address and token are taken from VAULT_ADDR and VAULT_TOKEN environment variables
+	passphraseHandler := NewPassphraseHandler(
+		wordlist,
+		conf.PassphraseNumWordsDefault,
+		conf.PassphraseSeparatorDefault,
+		conf.PassphraseCapitalizeDefault,
+		conf.PassphraseIncludeNumberDefault,
+		conf.PassphraseMaxNumberDefault)
+
 	e := echo.New()
 
 	if conf.HttpsRedirectEnabled {
@@ -38,6 +57,7 @@ func main() {
 	e.File("/getmsg", "static/getmsg.html")
 	e.File("/requestmsg", "static/requestmsg.html")
 	e.Any("/health", HealthHandler)
+	e.GET("/passphrase", passphraseHandler.GetPassphraseHandler)
 	e.GET("/secret", handlers.GetMsgHandler)
 	e.POST("/secret", handlers.CreateMsgHandler)
 	e.Static("/static", "static")
