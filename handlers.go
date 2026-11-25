@@ -1,11 +1,19 @@
 package main
 
 import (
+	"crypto/rand"
 	"encoding/base64"
 	"io/ioutil"
+	"math/big"
 	"net/http"
+	"strconv"
+	"strings"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sethvargo/go-diceware/diceware"
 )
 
 type TokenResponse struct {
@@ -16,6 +24,37 @@ type TokenResponse struct {
 
 type MsgResponse struct {
 	Msg string `json:"msg"`
+}
+
+type PassphraseResponse struct {
+	Passphrase string `json:"passphrase"`
+}
+
+type PassphraseHandler struct {
+	wordlist      diceware.WordList
+	numWords      int
+	separator     string
+	capitalize    bool
+	includeNumber bool
+	maxNumber     int
+}
+
+func NewPassphraseHandler(
+	wordlist diceware.WordList,
+	numWords int,
+	separator string,
+	capitalize bool,
+	includeNumber bool,
+	maxNumber int,
+) *PassphraseHandler {
+	return &PassphraseHandler{
+		wordlist:      wordlist,
+		numWords:      numWords,
+		separator:     separator,
+		capitalize:    capitalize,
+		includeNumber: includeNumber,
+		maxNumber:     maxNumber,
+	}
 }
 
 type SecretHandlers struct {
@@ -82,4 +121,44 @@ func HealthHandler(ctx echo.Context) error {
 
 func redirect(ctx echo.Context) error {
 	return ctx.Redirect(http.StatusPermanentRedirect, "/")
+}
+
+func (h *PassphraseHandler) GetPassphraseHandler(ctx echo.Context) error {
+	list, err := diceware.GenerateWithWordList(h.numWords, h.wordlist)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+
+	c := cases.Title(language.German)
+
+	if h.capitalize {
+		for i, w := range list {
+			list[i] = c.String(w)
+		}
+	}
+
+	if h.includeNumber {
+		n, err := randomInt(int64(h.maxNumber + 1))
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+
+		if len(list) > 0 {
+			list[len(list)-1] += strconv.FormatInt(n, 10)
+		}
+	}
+
+	r := &PassphraseResponse{
+		Passphrase: strings.Join(list, h.separator),
+	}
+
+	return ctx.JSON(http.StatusOK, r)
+}
+
+func randomInt(max int64) (int64, error) {
+	n, err := rand.Int(rand.Reader, big.NewInt(max))
+	if err != nil {
+		return 0, err
+	}
+	return n.Int64(), nil
 }
