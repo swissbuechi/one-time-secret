@@ -115,7 +115,14 @@ textarea:focus {
   position: relative;
   margin: 0 auto;
   max-width: 800px;
-  width: 100vw;
+  width: 100%;
+}
+
+/* Outer page container: side gutter so content never touches the screen edge
+   on mobile (max-width includes the padding, so desktop stays 800px wide) */
+main > .container {
+  max-width: calc(800px + 32px);
+  padding: 0 16px;
 }
 
 .encrypt {
@@ -166,6 +173,9 @@ textarea:focus {
   align-items: center;
   justify-content: right;
   gap: 6px;
+  /* Fixed height so input and output toolbars are always identical,
+     keeping the submit and copy buttons at the same position */
+  height: 48px;
   padding: 8px 10px;
   background: #f3f4f6;
   border-bottom: 1px solid #d1d5db;
@@ -193,6 +203,19 @@ textarea:focus {
 
 .toolbar-btn:active {
   background: #e5e7eb;
+}
+
+/* Static caption (not a button): muted, small caps, left-aligned */
+.toolbar-label {
+  margin-right: auto;
+  padding-left: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  cursor: default;
+  user-select: none;
 }
 
 .toolbar-divider {

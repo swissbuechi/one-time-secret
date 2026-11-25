@@ -26,8 +26,13 @@
             <h1>Secret Message</h1>
             <!--        <p class="subtitle">Get your secret one-time read only message</p>-->
             <p class="subtitle">Erhalte deine geheime Nachricht</p>
-            <div class="input-field">
-                <textarea id="textarea1" name="msg" placeholder="Message should appear here" readonly="true"></textarea>
+            <div class="editor">
+                <div class="editor-toolbar">
+                    <span class="toolbar-label">Nachricht</span>
+                </div>
+                <div class="input-field">
+                    <textarea id="textarea1" name="msg" placeholder="Message should appear here" readonly="true"></textarea>
+                </div>
             </div>
             <div class="button_wrapper">
                 <button class="button clipboard" data-clipboard-target="#textarea1" name="action" type="submit">

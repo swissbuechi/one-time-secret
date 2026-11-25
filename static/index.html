@@ -28,8 +28,9 @@
             <p class="subtitle">Erstelle eine geheime Nachricht</p>
             <div class="container">
                 <form action="/no-internet" enctype="multipart/form-data" id="secretform" method="POST">
-                    <div class="editor">
+                    <div class="editor" id="input-editor">
                         <div class="editor-toolbar">
+                            <span class="toolbar-label">Tools</span>
                             <button type="button" class="toolbar-btn" name="action" id="passphrase-button">
                                 <span class="button__text">🔑 Passphrase</span>
                             </button>
@@ -48,8 +49,15 @@
                 </form>
                 <div class="divider"></div>
                 <div class="success-encrypted">
-                    <div class="output-field">
-                        <textarea class="textarea" id="url" readonly=true></textarea>
+                    <!-- Same editor structure as the input so the copy button lands
+                         exactly where the "Link erstellen" button was -->
+                    <div class="editor">
+                        <div class="editor-toolbar">
+                            <span class="toolbar-label">Einmal-Link</span>
+                        </div>
+                        <div class="output-field">
+                            <textarea class="textarea" id="url" readonly=true></textarea>
+                        </div>
                     </div>
                     <div class="button_wrapper">
                         <button class="button clipboard" data-clipboard-target="#url">
@@ -99,7 +107,7 @@
                     pointerEvents: 'none',
                     visibility: 'hidden',
                 });
-                applyCss(document.querySelector('.input-field'), {
+                applyCss(document.getElementById('input-editor'), {
                     opacity: 0,
                     visibility: 'hidden',
                     pointerEvents: 'none',
