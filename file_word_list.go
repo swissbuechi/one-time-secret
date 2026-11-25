@@ -41,6 +41,7 @@ func LoadWordListFromFile(path string) (*FileWordList, error) {
 	scanner := bufio.NewScanner(f)
 
 	words := make(map[int]string)
+	seenWords := make(map[string]struct{})
 	digits := 0
 	lineNo := 0
 
@@ -72,9 +73,18 @@ func LoadWordListFromFile(path string) (*FileWordList, error) {
 				path, lineNo, len(keyStr), digits)
 		}
 
+		if strings.Trim(keyStr, "123456") != "" {
+			return nil, fmt.Errorf("invalid dice key in %s at line %d: %q (digits must be 1-6)", path, lineNo, keyStr)
+		}
+
 		if _, exists := words[key]; exists {
 			return nil, fmt.Errorf("duplicate key in %s at line %d: %d", path, lineNo, key)
 		}
+
+		if _, exists := seenWords[word]; exists {
+			return nil, fmt.Errorf("duplicate word in %s at line %d: %q", path, lineNo, word)
+		}
+		seenWords[word] = struct{}{}
 
 		words[key] = word
 	}
@@ -85,6 +95,17 @@ func LoadWordListFromFile(path string) (*FileWordList, error) {
 
 	if len(words) == 0 {
 		return nil, fmt.Errorf("wordlist is empty")
+	}
+
+	// Every possible dice roll must map to a word. Otherwise WordAt returns ""
+	// for missing keys and passphrases silently lose entropy.
+	expected := 1
+	for i := 0; i < digits; i++ {
+		expected *= 6
+	}
+	if len(words) != expected {
+		return nil, fmt.Errorf("incomplete wordlist %s: got %d words, expected %d for %d dice",
+			path, len(words), expected, digits)
 	}
 
 	return &FileWordList{

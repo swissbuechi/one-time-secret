@@ -152,6 +152,7 @@ func (h *PassphraseHandler) GetPassphraseHandler(ctx echo.Context) error {
 		Passphrase: strings.Join(list, h.separator),
 	}
 
+	ctx.Response().Header().Set("Cache-Control", "no-store")
 	return ctx.JSON(http.StatusOK, r)
 }
 

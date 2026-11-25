@@ -109,25 +109,40 @@
             });
     });
 
-    document.querySelector('#passphrase-button').addEventListener('click', function () {
-        fetch('/passphrase')
-            .then((res) => res.json())
-            .then((data) => {
-                const textarea = document.getElementById('textarea1');
+    function insertAtCursor(text) {
+        const textarea = document.getElementById('textarea1');
 
-                textarea.focus();
+        textarea.focus();
 
-                const selectionStart = textarea.selectionStart;
-                const selectionEnd = textarea.selectionEnd;
+        const selectionStart = textarea.selectionStart;
+        const selectionEnd = textarea.selectionEnd;
 
-                const inserted = document.execCommand('insertText', false, data.passphrase);
+        const inserted = document.execCommand('insertText', false, text);
 
-                // Fallback
-                if (!inserted) {
-                    textarea.setRangeText(data.passphrase, selectionStart, selectionEnd, 'end');
-                    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        // Fallback
+        if (!inserted) {
+            textarea.setRangeText(text, selectionStart, selectionEnd, 'end');
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    }
+
+    function fetchAndInsert(url, field) {
+        fetch(url, { cache: 'no-store' })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
                 }
+                return res.json();
+            })
+            .then((data) => insertAtCursor(data[field]))
+            .catch((err) => {
+                console.error(err);
+                alert('Generieren fehlgeschlagen. Bitte erneut versuchen.');
             });
+    }
+
+    document.querySelector('#passphrase-button').addEventListener('click', function () {
+        fetchAndInsert('/passphrase', 'passphrase');
     });
 
     function applyCss(element, css) {
