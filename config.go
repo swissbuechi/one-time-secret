@@ -48,7 +48,7 @@ func loadConfig() conf {
 	cnf.TLSCertFilepath = getEnv(TLSCertFilepathVarenv, "")
 	cnf.TLSCertKeyFilepath = getEnv(TLSCertKeyFilepathVarenv, "")
 	cnf.VaultPrefix = getEnv(VaultPrefixenv, "")
-	cnf.PassphraseNumWordsDefault = getEnvInt(PassphraseNumWordsDefaultVarenv, 5)
+	cnf.PassphraseNumWordsDefault = getEnvInt(PassphraseNumWordsDefaultVarenv, 6)
 	cnf.PassphraseSeparatorDefault = getEnv(PassphraseSeparatorDefaultVarenv, "-")
 	cnf.PassphraseCapitalizeDefault = getEnvBool(PassphraseCapitalizeDefaultVarenv, true)
 	cnf.PassphraseIncludeNumberDefault = getEnvBool(PassphraseIncludeNumberDefaultVarenv, true)
@@ -78,6 +78,14 @@ func loadConfig() conf {
 	if cnf.HttpsBindingAddress != "" && cnf.TLSAutoDomain == "" && cnf.TLSCertFilepath == "" {
 		log.Fatalf("HTTPS binding address (%s) is set but neither auto TLS (%s) nor manual TLS (%s and %s) are enabled",
 			HttpsBindingAddressVarenv, TLSAutoDomainVarenv, TLSCertFilepathVarenv, TLSCertKeyFilepathVarenv)
+	}
+
+	if cnf.PassphraseNumWordsDefault < 1 {
+		log.Fatalf("Passphrase num words (%s) must be at least 1", PassphraseNumWordsDefaultVarenv)
+	}
+
+	if cnf.PassphraseMaxNumberDefault < 0 {
+		log.Fatalf("Passphrase max number (%s) must not be negative", PassphraseMaxNumberDefaultVarenv)
 	}
 
 	if cnf.VaultPrefix == "" {
